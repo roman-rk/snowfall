@@ -37,6 +37,17 @@ void __fastcall Tfrm_Main::btn_TemperatureConditionClick(TObject *Sender)
         frm_TemperatureCondition->Show();
         frm_Main->Enabled=false;
 }
+
+//---------------------------------------------------------------------------
+// Private Functions
+//---------------------------------------------------------------------------
+
+string CalculateDump(int car_index) {
+       double result = (car_size[car_index] / GripAngleSin) + 0.3f;
+       char buffer[32];
+       snprintf(buffer, sizeof(buffer), "%g", result);
+       return buffer;
+}
 //---------------------------------------------------------------------------
 
 void __fastcall Tfrm_Main::btn_PrecipitationClick(TObject *Sender)
@@ -521,7 +532,8 @@ void __fastcall Tfrm_Main::btn_CarCalculateClick(TObject *Sender)
         RecommendedCarIndex=car_array[j];
 
         lbl_RecommendedCar->Font->Color=clWindowText;
-        lbl_RecommendedCar->Caption=car[RecommendedCarIndex] + " с рекомендуемой длиной отвала не менее " + CalculateDump(RecommendedCarIndex) + " метров";
+        string capition = car[RecommendedCarIndex] + " с рекомендуемой длиной отвала не менее " + CalculateDump(RecommendedCarIndex) + " метров";
+        lbl_RecommendedCar->Caption=caption;
         
 }
 //---------------------------------------------------------------------------
@@ -881,14 +893,4 @@ void __fastcall Tfrm_Main::OpenCarDatabaseClick(TObject *Sender)
                 }
                 stream.close();
         }
-}
-//---------------------------------------------------------------------------
-// Private Functions
-//---------------------------------------------------------------------------
-
-string CalculateDump(int car_index) {
-       double result = (car_size[car_index] / GripAngleSin) + 0.3f;
-       char buffer[32];
-       snprintf(buffer, sizeof(buffer), "%g", result);
-       return buffer;
 }
