@@ -521,7 +521,7 @@ void __fastcall Tfrm_Main::btn_CarCalculateClick(TObject *Sender)
         RecommendedCarIndex=car_array[j];
 
         lbl_RecommendedCar->Font->Color=clWindowText;
-        lbl_RecommendedCar->Caption=car[RecommendedCarIndex];
+        lbl_RecommendedCar->Caption=car[RecommendedCarIndex] + " с рекомендуемой длиной отвала не менее " + CalculateDump(RecommendedCarIndex) + " метров";
         
 }
 //---------------------------------------------------------------------------
@@ -874,11 +874,6 @@ void __fastcall Tfrm_Main::OpenCarDatabaseClick(TObject *Sender)
                         line="          "+car[index];
                         frm_CarDatabase->mem_CarDatabase->Lines->Add(line);
 
-                        frm_CarDatabase->mem_CarDatabase->Lines->Add("Рекомендуемая минимальная длина отвала:");
-                        stream>>index;
-                        line="          "+ CalculateDump(index);
-                        frm_CarDatabase->mem_CarDatabase->Lines->Add(line);
-
                         frm_CarDatabase->mem_CarDatabase->Lines->Add("");
 
                         if(stream.peek()==EOF)
@@ -891,7 +886,9 @@ void __fastcall Tfrm_Main::OpenCarDatabaseClick(TObject *Sender)
 // Private Functions
 //---------------------------------------------------------------------------
 
-AnsiString CalculateDump(int car_index) {
+string CalculateDump(int car_index) {
        double result = (car_size[car_index] / GripAngleSin) + 0.3f;
-       return FormatFloat("0.000", result)
+       char buffer[32];
+       snprintf(buffer, sizeof(buffer), "%g", result);
+       return buffer;
 }
