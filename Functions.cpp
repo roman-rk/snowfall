@@ -17,4 +17,3 @@ char *AnsiToChar(AnsiString string_a)
         string_c[length_string]=NULL;//последний символ - признак окончания строки
         return string_c;//возвратить имя файла типом char
 }
- 
